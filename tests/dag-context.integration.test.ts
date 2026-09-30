@@ -11,13 +11,13 @@ import {
   topologicalOrder,
   type DagEdge,
   type DagNode,
-} from "../src/index.js";
+} from "../dag/index.js";
 import {
   createAgentsDagContext,
   type AgentExecutionInput,
   type JsonObject,
   type PlannedAgentNode,
-} from "../src/agents-dag-context/index.js";
+} from "../agents-dag-context/index.js";
 
 /** 在可验证的临时目录内运行集成场景。 */
 async function withContextDirectory(

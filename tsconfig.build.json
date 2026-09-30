@@ -1,5 +1,17 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src", "web"],
-  "exclude": ["tests"]
+  "include": [
+    "dag",
+    "agents-dag-context",
+    "cordis",
+    "dag-webui",
+    "examples",
+    "pixel-studio",
+    "agents-runtime",
+    "llm",
+    "company"
+  ],
+  "exclude": [
+    "tests"
+  ]
 }

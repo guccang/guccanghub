@@ -19,7 +19,7 @@ import {
   setNodeData,
   topologicalOrder,
   type Dag,
-} from "../src/index.js";
+} from "../dag/index.js";
 
 type NodeData = { title: string };
 type EdgeData = { kind: string; required: boolean };

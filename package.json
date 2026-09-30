@@ -3,24 +3,113 @@
   "version": "0.1.0",
   "description": "TypeScript DAG 数据结构、React 可视化与可选 Agent 节点上下文模块",
   "type": "module",
-  "engines": { "node": ">=20.0.0" },
-  "exports": {
-    ".": { "types": "./dist/src/index.d.ts", "import": "./dist/src/index.js" },
-    "./agents-dag-context": { "types": "./dist/src/agents-dag-context/index.d.ts", "import": "./dist/src/agents-dag-context/index.js" },
-    "./react": { "types": "./dist/web/index.d.ts", "import": "./dist/web/index.js" },
-    "./react/style.css": "./web/style.css"
+  "engines": {
+    "node": ">=22.12.0"
   },
-  "files": ["dist", "web/style.css", "README.md"],
+  "exports": {
+    ".": {
+      "types": "./dist/dag/index.d.ts",
+      "import": "./dist/dag/index.js"
+    },
+    "./agents-dag-context": {
+      "types": "./dist/agents-dag-context/index.d.ts",
+      "import": "./dist/agents-dag-context/index.js"
+    },
+    "./react": {
+      "types": "./dist/dag-webui/index.d.ts",
+      "import": "./dist/dag-webui/index.js"
+    },
+    "./react/style.css": "./dag-webui/style.css",
+    "./cordis": {
+      "types": "./dist/cordis/index.d.ts",
+      "import": "./dist/cordis/index.js"
+    },
+    "./dag-webui": {
+      "types": "./dist/dag-webui/index.d.ts",
+      "import": "./dist/dag-webui/index.js"
+    },
+    "./cordis/dag": {
+      "types": "./dist/cordis/dag.d.ts",
+      "import": "./dist/cordis/dag.js"
+    },
+    "./dag-webui/style.css": "./dag-webui/style.css",
+    "./dag-webui/demo.css": "./dag-webui/demo.css",
+    "./pixel-studio": {
+      "types": "./dist/pixel-studio/index.d.ts",
+      "import": "./dist/pixel-studio/index.js"
+    },
+    "./pixel-studio/webui": {
+      "types": "./dist/pixel-studio/webui.d.ts",
+      "import": "./dist/pixel-studio/webui.js"
+    },
+    "./pixel-studio/style.css": "./pixel-studio/style.css",
+    "./agents-runtime": {
+      "types": "./dist/agents-runtime/index.d.ts",
+      "import": "./dist/agents-runtime/index.js"
+    },
+    "./llm": {
+      "types": "./dist/llm/index.d.ts",
+      "import": "./dist/llm/index.js"
+    },
+    "./company": {
+      "types": "./dist/company/index.d.ts",
+      "import": "./dist/company/index.js"
+    },
+    "./company/client": {
+      "types": "./dist/company/client.d.ts",
+      "import": "./dist/company/client.js"
+    },
+    "./dag-webui/company.css": "./dag-webui/company.css",
+    "./cordis/config": {
+      "types": "./dist/cordis/config.d.ts",
+      "import": "./dist/cordis/config.js"
+    },
+    "./cordis/config.node": {
+      "types": "./dist/cordis/config.node.d.ts",
+      "import": "./dist/cordis/config.node.js"
+    },
+    "./cordis/app": {
+      "types": "./dist/cordis/app.d.ts",
+      "import": "./dist/cordis/app.js"
+    },
+    "./cordis/browser": {
+      "types": "./dist/cordis/browser.d.ts",
+      "import": "./dist/cordis/browser.js"
+    }
+  },
+  "files": [
+    "dist",
+    "dag-webui/style.css",
+    "dag-webui/demo.css",
+    "README.md",
+    "pixel-studio/style.css",
+    "public/office-engine",
+    "pixel-studio/README.md",
+    "pixel-studio/UPSTREAM.json",
+    "agents-runtime/README.md",
+    "llm/README.md",
+    "company/README.md",
+    "dag-webui/company.css",
+    "cordis/README.md"
+  ],
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --port 4317",
-    "start": "vite preview --host 127.0.0.1 --port 4317",
-    "build": "tsc -p tsconfig.build.json && vite build",
+    "dev": "vite --configLoader runner",
+    "start": "vite preview",
+    "build": "tsc -p tsconfig.build.json && vite build --configLoader runner",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
-    "check": "npm run typecheck && npm test && npm run build"
+    "check": "npm run typecheck && npm test && npm run build",
+    "example": "npm run build && node dist/examples/cordis-app.js",
+    "example:runtime": "npm run build && node dist/examples/agents-runtime-app.js",
+    "example:llm": "npm run build && node dist/examples/llm-app.js",
+    "company": "npm run build && node dist/examples/company-app.js",
+    "company:demo": "npm run build && node dist/examples/company-app.js --demo"
   },
   "dependencies": {
+    "@cordisjs/core": "3.18.1",
+    "@guccang/agents-runtime": "git+https://github.com/guccang/agents-runtime.git#15ae29e86e6cd257bc6c22acc3a5001f1fe6714f",
     "@xyflow/react": "^12.9.3",
+    "cordis": "3.18.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

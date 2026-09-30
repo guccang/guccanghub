@@ -1,0 +1,22 @@
+{
+  "repository": "https://github.com/guccang/goalhub",
+  "commit": "0a1dedf3f247ec2f9120accd3c50e6926518f473",
+  "directory": "public/office-engine",
+  "sha256": {
+    "engine.js.LEGAL.txt": "c0c3d146fbeae282d92f7024daffdadb51ed00304f8ccc7a962f17e6d225c097",
+    "engine.js": "6c33c74820331e3d2ec0b54da2ff71e1dda0ab60f01ced1c54f3a71631764de4",
+    "LICENSE.txt": "3fe5c1c9c922a77cd084e7671223589606b1f926c15e2751fc602b8dc6fc0181",
+    "THIRD-PARTY-LICENSES.txt": "73577ecaae0dcda81083e893fb6279384b0dfc09fbb2ec97b83585945e00ad44",
+    "ASSET-LICENSE.txt": "09d7290a245501f538ec55236fe87017f2a2d18f8a99486326042d670d23c120",
+    "assets/interiors-T3GAX37Q.png": "01a890f9e34d8dc8d7e275489143b837569127d5f928419e6b6edc54b9b5ff33",
+    "assets/a5-office-floors-walls-2YWHURIC.png": "7983d4b5782bd5ea80ead73310c92681f36b8d15bd2996ba5aff35953e656f3c",
+    "assets/office-tileset-AFXKP7S2.png": "95d448c5df9d726799abe8c3ce211ead27f8e503dca62f616e044b63aa42fa8e"
+  },
+  "localPatches": [
+    {
+      "file": "engine.js",
+      "change": "Remove ?url from three bundled atlas image URLs so Vite serves PNG pixels instead of an asset-import JavaScript module.",
+      "sha256": "b78a08acd534ca0cc633a29796109c9dcba7ec4ea9177db46673afa8a1a1f771"
+    }
+  ]
+}

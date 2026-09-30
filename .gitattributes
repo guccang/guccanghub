@@ -1,0 +1,2 @@
+# Vendored build contains shader template strings; keep upstream whitespace.
+public/office-engine/engine.js linguist-generated=true whitespace=-blank-at-eol

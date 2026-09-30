@@ -10,8 +10,8 @@ import {
   type AgentNodeState,
   type AgentPlannerPort,
   type PlannedAgentNode,
-} from "../src/agents-dag-context/index.js";
-import type { DagNode } from "../src/index.js";
+} from "../agents-dag-context/index.js";
+import type { DagNode } from "../dag/index.js";
 
 /** 在独立临时目录中执行测试并安全清理该目录。 */
 async function withTempDir(

@@ -1,9 +1,72 @@
 {
   "compilerOptions": {
-    "target": "ES2023", "module": "NodeNext", "moduleResolution": "NodeNext",
-    "strict": true, "esModuleInterop": true, "skipLibCheck": true,
-    "jsx": "react-jsx", "lib": ["ES2023", "DOM"], "types": ["node"],
-    "declaration": true, "outDir": "dist", "rootDir": "."
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "lib": [
+      "ES2023",
+      "DOM"
+    ],
+    "types": [
+      "node",
+      "vite/client"
+    ],
+    "declaration": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "paths": {
+      "@goalsplit/dag": [
+        "./dag/index.ts"
+      ],
+      "@goalsplit/dag/agents-dag-context": [
+        "./agents-dag-context/index.ts"
+      ],
+      "@goalsplit/dag/cordis": [
+        "./cordis/index.ts"
+      ],
+      "@goalsplit/dag/pixel-studio": [
+        "./pixel-studio/index.ts"
+      ],
+      "@goalsplit/dag/agents-runtime": [
+        "./agents-runtime/index.ts"
+      ],
+      "@goalsplit/dag/llm": [
+        "./llm/index.ts"
+      ],
+      "@goalsplit/dag/company": [
+        "./company/index.ts"
+      ],
+      "@goalsplit/dag/cordis/config": [
+        "./cordis/config.ts"
+      ],
+      "@goalsplit/dag/cordis/config.node": [
+        "./cordis/config.node.ts"
+      ],
+      "@goalsplit/dag/cordis/app": [
+        "./cordis/app.ts"
+      ],
+      "@goalsplit/dag/cordis/browser": [
+        "./cordis/browser.tsx"
+      ]
+    },
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   },
-  "include": ["src", "web", "tests", "vite.config.ts"]
+  "include": [
+    "dag",
+    "agents-dag-context",
+    "cordis",
+    "dag-webui",
+    "examples",
+    "tests",
+    "vite.config.ts",
+    "pixel-studio",
+    "agents-runtime",
+    "llm",
+    "company"
+  ]
 }
