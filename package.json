@@ -1,11 +1,12 @@
 {
   "name": "@goalsplit/dag",
   "version": "0.1.0",
-  "description": "独立的 TypeScript DAG 数据结构操作与 React 可视化组件",
+  "description": "TypeScript DAG 数据结构、React 可视化与可选 Agent 节点上下文模块",
   "type": "module",
   "engines": { "node": ">=20.0.0" },
   "exports": {
     ".": { "types": "./dist/src/index.d.ts", "import": "./dist/src/index.js" },
+    "./agents-dag-context": { "types": "./dist/src/agents-dag-context/index.d.ts", "import": "./dist/src/agents-dag-context/index.js" },
     "./react": { "types": "./dist/web/index.d.ts", "import": "./dist/web/index.js" },
     "./react/style.css": "./web/style.css"
   },

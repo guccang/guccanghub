@@ -69,4 +69,50 @@ import '@goalsplit/dag/react/style.css';
 
 `DagView` 只负责展示，位置由拓扑层次计算，不写入图数据。宿主控制图和选中状态；传入新图即更新显示。布局是默认算法，适合中小型 DAG，后续可由宿主自定义布局。安装 React 相关依赖由包管理器处理。核心 API 无须浏览器环境。
 
-此次范围聚焦 DAG 结构及展示；旧版目标运行时、SQLite、HTTP/SSE 和规划/执行适配器已从包中移除，原 `@goalsplit/runtime` 导入路径不再适用。
+旧版目标运行时、SQLite、HTTP/SSE 和规划/执行适配器已从包中移除，原 `@goalsplit/runtime` 导入路径不再适用。
+
+## Agent 节点上下文
+
+`@goalsplit/dag/agents-dag-context` 是可选的 Node.js 文件模块。宿主提供规划器与执行器；模块不调用真实 LLM，也不让 DAG 内核依赖文件系统。
+
+```ts
+import type { DagNode } from '@goalsplit/dag';
+import { createAgentsDagContext, type PlannedAgentNode } from '@goalsplit/dag/agents-dag-context';
+
+const agents = createAgentsDagContext({
+  rootDir: './data/agent-context',
+  planner: {
+    async decompose({ goal }) {
+      const nodes: DagNode<PlannedAgentNode>[] = [
+        { id: 'research', data: { agentId: 'researcher', instruction: '收集资料', input: { topic: goal.objective } } },
+        { id: 'review', data: { agentId: 'reviewer', instruction: '审核资料', input: { criteria: '准确性' } } },
+      ];
+      return {
+        nodes,
+        edges: [{ id: 'research-review', source: 'research', target: 'review', data: { required: true } }],
+      };
+    },
+  },
+  executor: {
+    async execute(request) {
+      return {
+        status: 'SUCCEEDED',
+        summary: `${request.nodeId} 已完成`,
+        output: { result: request.input, upstream: request.dependencies.map(dep => dep.output) },
+      };
+    },
+  },
+});
+
+const run = await agents.decomposeGoal('run-001', { objective: '完成调研', context: {} });
+await agents.updateNodeInput(run.runId, 'review', { criteria: '准确性与完整性' });
+await agents.executeDag(run.runId);
+const node = await agents.getNodeContext(run.runId, 'review');
+console.log(node.state.status, node.output);
+```
+
+规划结果的每个节点要包含 `agentId`、`instruction` 和 JSON 对象 `input`；每条边的 `data` 也是 JSON 对象。模块验证 DAG、给节点数据写入 `contextRef.relativeDir`，并在 `rootDir/runs/<运行摘要>/nodes/<节点摘要>/` 下保存 `input.json`、`state.json`、`feedback.json`、`output.json`。每次执行另存 `attempts/0001/input.json` 和 `feedback.json`，保留输入快照与历史尝试。文件夹名由 ID 的 SHA-256 生成，避免路径穿越和同名冲突；真实 ID 保存在运行清单与状态文件中。
+
+执行器反馈只接受 `{ status: 'SUCCEEDED', summary: string, output: object }` 或 `{ status: 'FAILED', summary: string, output: object, error: string }`。无效反馈或执行异常会记录为固定格式 `FAILED`。上游成功的 `output.json` 和边数据会进入下游的冻结执行输入。状态历史记录 `READY / BLOCKED / RUNNING / SUCCEEDED / FAILED / PAUSED / UNKNOWN`；可使用 `pauseNode()`、`resumeNode()`、`retryNode()` 控制尚未执行或失败的节点。重启后调用 `recoverRun()`：已有反馈会补录状态，无法确认的在途调用转为 `UNKNOWN`，不会自动重复调用外部 Agent。
+
+模块面向单个本地调度所有者；多个进程同时写入同一运行目录需要由宿主加锁。浏览器页面不能直接使用此 Node.js 文件模块，可通过宿主服务把快照传给 `DagView` 展示。
